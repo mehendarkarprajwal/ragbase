@@ -39,7 +39,7 @@ def build_qa_chain(files):
 async def ask_chain(question: str, chain):
     full_response = ""
     assistant = st.chat_message(
-        "assistant", avatar=str(Config.Path.IMAGES_DIR / "assistant-avatar.png")
+        "assistant", avatar=str(Config.Path.IMAGES_DIR / "aix-logo.jpg")
     )
     with assistant:
         message_placeholder = st.empty()
@@ -61,7 +61,7 @@ async def ask_chain(question: str, chain):
 def show_upload_documents():
     holder = st.empty()
     with holder.container():
-        st.header("RagBase")
+        st.header("AIX-RAG")
         st.subheader("Get answers from your documents")
         uploaded_files = st.file_uploader(
             label="Upload PDF files", type=["pdf"], accept_multiple_files=True
@@ -79,7 +79,7 @@ def show_message_history():
     for message in st.session_state.messages:
         role = message["role"]
         avatar_path = (
-            Config.Path.IMAGES_DIR / "assistant-avatar.png"
+            Config.Path.IMAGES_DIR / "aix-logo.jpg"
             if role == "assistant"
             else Config.Path.IMAGES_DIR / "user-avatar.png"
         )

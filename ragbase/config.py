@@ -14,16 +14,18 @@ class Config:
 
     class Model:
         EMBEDDINGS = "BAAI/bge-base-en-v1.5"
+        # EMBEDDINGS = "mxbai-embed-large:latest"
         RERANKER = "ms-marco-MiniLM-L-12-v2"
-        LOCAL_LLM = "gemma2:9b"
+        # LOCAL_LLM = "gemma2:9b"
+        LOCAL_LLM = "gemma3:12b-it-q8_0"
         REMOTE_LLM = "llama-3.1-70b-versatile"
         TEMPERATURE = 0.0
-        MAX_TOKENS = 8000
-        USE_LOCAL = False
+        MAX_TOKENS = 16000
+        USE_LOCAL = True
 
     class Retriever:
         USE_RERANKER = True
         USE_CHAIN_FILTER = False
 
     DEBUG = False
-    CONVERSATION_MESSAGES_LIMIT = 6
+    CONVERSATION_MESSAGES_LIMIT = 100
