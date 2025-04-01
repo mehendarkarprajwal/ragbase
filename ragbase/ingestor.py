@@ -8,6 +8,7 @@ from langchain_experimental.text_splitter import SemanticChunker
 from langchain_qdrant import Qdrant
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_text_splitters import CharacterTextSplitter
+from langchain_ollama import OllamaEmbeddings
 
 from ragbase.config import Config
 
@@ -17,16 +18,15 @@ from concurrent.futures import ThreadPoolExecutor
 class Ingestor:
     def __init__(self, max_workers: int = 16):
         self.embeddings = FastEmbedEmbeddings(model_name=Config.Model.EMBEDDINGS)
+        # self.embeddings = OllamaEmbeddings(model="mxbai-embed-large:latest")
+
         self.semantic_splitter = SemanticChunker(
             self.embeddings, breakpoint_threshold_type="interquartile"
         )
-        # self.recursive_splitter = RecursiveCharacterTextSplitter(
-        #     chunk_size=2048,
-        #     chunk_overlap=128,
-        #     add_start_index=True,
-        # )
-        self.text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
-            encoding_name="cl100k_base", chunk_size=4096, chunk_overlap=256
+        self.recursive_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1024,
+            chunk_overlap=256,
+            add_start_index=True,
         )
         self.max_workers = max_workers
 
@@ -37,7 +37,7 @@ class Ingestor:
         # return self.recursive_splitter.split_documents(
         #     self.semantic_splitter.create_documents([document_text])
         # )
-        return self.text_splitter.split_documents(
+        return self.recursive_splitter.split_documents(
             self.semantic_splitter.create_documents([document_text])
         )
 
