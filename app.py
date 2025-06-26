@@ -64,7 +64,7 @@ def show_upload_documents():
         st.header("AIX-RAG")
         st.subheader("Get answers from your documents")
         uploaded_files = st.file_uploader(
-            label="Upload PDF files", type=["pdf"], accept_multiple_files=True
+            label="Upload PDF files", type=None, accept_multiple_files=True
         )
     if not uploaded_files:
         st.warning("Please upload PDF documents to continue!")
